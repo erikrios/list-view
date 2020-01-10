@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         title: 'Demo Flutter',
         theme: ThemeData(primarySwatch: Colors.indigo),
-        home: HomePage(),
+        home: ListViewBuilderHomePage(),
       );
 }
 
@@ -40,6 +40,45 @@ class _HomePageState extends State<HomePage> {
         body: ListView(
           padding: EdgeInsets.all(30.0),
           children: createItems(20),
+        ),
+      );
+}
+
+class ListViewBuilderHomePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ListViewBuilderHomePageState();
+}
+
+class _ListViewBuilderHomePageState extends State<ListViewBuilderHomePage> {
+  final int count = 20;
+  List<bool> items = List<bool>();
+
+  @override
+  void initState() {
+    setState(() {
+      for (var i = 0; i < this.count; i++) {
+        items.add(false);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text('Demo ListView'),
+        ),
+        body: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              title: Text('Item ${index + 1}'),
+              leading: Icon(Icons.person),
+              trailing: Icon(Icons.delete),
+              onTap: () {
+                print('Anda memilih item ${index + 1}');
+              },
+            );
+          },
         ),
       );
 }
